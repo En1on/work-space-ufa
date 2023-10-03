@@ -3,6 +3,8 @@ import random
 check = False # непонятные переменные
 check_2 = False
 
+# обновлено локально
+
 
 def create_email():
   alphabet = ["a", "b", "c",
