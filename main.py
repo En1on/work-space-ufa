@@ -1,10 +1,14 @@
 import random
-# после импортов 2 отступа и после функций
-check = False # непонятные переменные
-check_2 = False
 
 
-def create_email():
+def random_place_number(string):
+  random_place = random.randint(0,len(string)-1)
+  random_number = str(random.randint(0,9))
+  string = string.replace(string[random_place],random_number)
+  return string
+
+
+def create_email(lenght):
   alphabet = ["a", "b", "c",
               "d", "e", "f",
               "g", "h", "i",
@@ -21,28 +25,27 @@ def create_email():
          'inbox', 'list'
         ]
 
-# TODO: между переменными 0-1 отступ
   email = ''
 
-  x = random.randint(0,5)# TODO: непонятная переменная
+  random_place_underscore = random.randint(0,5)
 
-  for i in range(random.randint(6,19)): # TODO: прогуглить какие функции есть в рандоме
-    email = email  + alphabet[random.randint(0,25)] # TODO: random.choice(alphabet)
-    if i == x:
+  for i in range(lenght): # TODO: прогуглить какие функции есть в рандоме
+    email = email  + random.choice(alphabet) 
+    
+    if i == random_place_underscore:
       email = email  + '_'
-      x =1234567890
+      random_place_underscore =1234567890
   
   for i in range(4):
-    email = email.replace(alphabet[random.randint(0,random.randint(0,len(email)-1))],str(random.randint(0,9)))
-    # TODO: ПЕРЕЧИТАТЬ ZEN Python и разобрать каждую строчку
+    email = random_place_number(email)
   
   
   email = email + "@" + mail[random.randint(0,6)] + ".com"
 
   return email
 
-# TODO: то же самое что и с созданием почты
-def create_password():
+
+def create_password(lenght):
   alphabet = ["a", "b", "c",
               "d", "e", "f",
               "g", "h", "i",
@@ -55,31 +58,29 @@ def create_password():
   
   password = ''
   
-  x = random.randint(1,5)
+  random_place_under = random.randint(1,5)
 
-  y = random.randint(0,5)
+  random_upper = random.randint(0,5)
 
   locate_random_number = random.randint(0,5)
 
-  if y == x and y != 0:
-    y -=1
+  if random_upper == random_place_under and random_upper != 0:
+    random_upper -=1
   else:
-    y += 1
+    random_upper += 1
   
-  for i in range(random.randint(8,25)):
-    if i == x:
+  for i in range(lenght):
+    if i == random_place_under:
       password = password  + '_'
-    elif i == y:
+    elif i == random_upper:
       password = password  + alphabet[random.randint(0,25)].upper()
-    elif i == locate_random_number:
-      password = password + str(random.randint(0,9))
     else:
       password = password  + alphabet[random.randint(0,25)]
 
   
-  for i in range(4):
-    # password = password.replace(alphabet[random.randint(0,random.randint(0,len(password)-1))],str(random.randint(0,9)))
-    password = password.replace(alphabet[random.randint(0,len(password))],str(random.randint(0,9)))  
+  for i in range(lenght//3):
+    password =  random_place_number(password)
+  
   return password
 
 def check_mail():
@@ -94,26 +95,79 @@ def check_password():
   if brut_password == created_password:
     return True
 
+def bruting_password(correct_password):
+  wrong_password = []
 
-created_mail = create_email()
-created_password = create_password()
+  
+  while True:
+    password = create_password(len(correct_password))
+    if password not in wrong_password:
+      if correct_password == password:
+        print("True")
+        break
+      else:
+        wrong_password.append(password)
+
+
+def bruting_mail(correct_email):
+  wrong_email = []
+
+  
+  while True:
+    email = create_email(len(correct_email))
+    if email not in wrong_email:
+      if correct_email == email:
+        print("True")
+        break
+      else:
+        wrong_email.append(email)
+
+
+
+created_mail = create_email(random.randint(6,10))
+created_password = create_password(random.randint(5,8))
 print(created_mail, created_password)
 
+# bruting_password(created_password)
+# bruting_email(created_mail)
+
+bruting_password("a3b")
+bruting_mail("g_hn8@mail.com")
 
 
 while True:
-  if check == True:
+  print("Введите почту:")
+  if check_mail() == True:
     print("Введите пароль:")
-    check_2 = check_password()# TODO: чек отдельно, ввод отдельно
-    if check_2 == True:
+    if check_password() == True:
       print("Добро пожаловать!")
-      break
-  else:
-    print("Введите почту:") # TODO: тоже отдельно чек и ввод
-    check = check_mail()
+      break # TODO: тоже отдельно чек и ввод
 
-# brut_password = bruting(created_password) # TODO: при подборе пароля разрешается юзать длину пароля
-# TODO: точно также подобрать почту
-print(created_password == brut_password)
+
+
+def bruting_password(correct_password):
+  alphabet = ["a", "b", "c",
+              "d", "e", "f",
+              "g", "h", "i",
+              "j", 'k', 'l',
+              'm', 'n', 'o', 
+              'p', 'q', 'r', 
+              's', 't', 'u', 
+              'v', 'w', 'x', 
+              'y', 'z'
+            ]
+
+  wrong_password = []
+
+  
+  while True:
+    password = create_password(len(correct_password))
+    if password not in wrong_password:
+      if correct_password == password:
+        print("True")
+        break
+      else:
+        wrong_password.append(password)
+
 
 
